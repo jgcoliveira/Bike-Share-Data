@@ -60,22 +60,34 @@ The data is split into 4 folders, each one containing a csv file of quarterly tr
 
 For analysis purposes, the csv files will be merged onto 1 single file to facilitate the analysis
 
+### Tools Used
+
+Since we are dealing solely with equaly structured tabular data and there is no need to create a data schema, we will be using RStudio for the several tasks performed throughout this project.
+
 ### Columns
 
-Since we are dealing solely with equaly structured tabular data and there is no need to create a data model, we will be using R for the several tasks throughout this project.
-
-Let's find out what variables are present and what type of data they contain
+Let's look into the data
 ```R
 install.packages("tidyverse")
-
 library(tidyverse)
 
+# load the first data set 
 Q12019_Cyclistic <- read.csv("C:/Users/jguic/OneDrive/Desktop/Coding/Google Capstone/Case Study 1 - Cyclistic/Raw Data/Divvy_Trips_2019_Q1/Divvy_Trips_2019_Q1.csv")
 
-colnames(Q12019_Cyclistic)
+# check the column names and some column samples
+head(Q12019_Cyclistic)
 ```
+![image](https://user-images.githubusercontent.com/78386715/134204550-28fd686b-0f91-41ce-b209-b68023015108.png)
+
+
+
 
 ### Data Quality
+
+Let's review the data integrity by:
+Make sure that all the data sets share the same columns, in the same order
+Looking for missing values and determining their importance
+
 ● Are there issues with bias or credibility in this data? Does your data ROCCC? 
 
 ● How are you addressing licensing, privacy, security, and accessibility? 
