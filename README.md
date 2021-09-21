@@ -30,7 +30,7 @@ Design marketing strategies aimed at converting casual riders into annual member
 
 ### Scope
 
-Considering that annual members are much more profitable than casual riders, we will analyze Cyclistic historical bike trip data to better understand the differences between casual riders and annual members, so that we can present valuable insights to the marketing team that will facilitate the conversion of casual riders to annual members and consequently increase profit.
+Considering that annual members are much more profitable than casual riders, we will analyze Cyclistic historical bike trip data to identify trends and to better understand the how different customer types use the Cyclistic bike service, so that we can present valuable insights to the marketing team that will facilitate the conversion of casual riders into annual members and consequently increase profit.
 
 Are there any trends in the data?
 In what ways do casual riders and annual members differ? What do they have in common?
@@ -48,4 +48,40 @@ Data Analysis
 Visualizations and Key Findings
 Recommendations
 
+## 2. Data Sources
 
+● Where is your data located?
+
+### Location
+
+We will use 12 months of Cyclistic trip data available through [this link](https://divvy-tripdata.s3.amazonaws.com/index.html). The data has been made available by Motivate International Inc. under [this license](https://www.divvybikes.com/data-license-agreement) for the purpose of this case study.
+
+The data is split into 4 folders, each one containing a csv file of quarterly trip data. Together they represent 4 quarters of 2019 trip data.
+
+For analysis purposes, the csv files will be merged onto 1 single file to facilitate the analysis
+
+### Columns
+
+Since we are dealing solely with equaly structured tabular data and there is no need to create a data model, we will be using R for the several tasks throughout this project.
+
+Let's find out what variables are present and what type of data they contain
+```R
+install.packages("tidyverse")
+
+library(tidyverse)
+
+Q12019_Cyclistic <- read.csv("C:/Users/jguic/OneDrive/Desktop/Coding/Google Capstone/Case Study 1 - Cyclistic/Raw Data/Divvy_Trips_2019_Q1/Divvy_Trips_2019_Q1.csv")
+
+colnames(Q12019_Cyclistic)
+```
+
+### Data Quality
+● Are there issues with bias or credibility in this data? Does your data ROCCC? 
+
+● How are you addressing licensing, privacy, security, and accessibility? 
+
+● How did you verify the data’s integrity? 
+
+● How does it help you answer your question? 
+
+● Are there any problems with the data?
