@@ -74,7 +74,7 @@ library(tidyverse)
 # load the first data set 
 Q12019_Cyclistic <- read.csv("C:/Users/jguic/OneDrive/Desktop/Coding/Google Capstone/Case Study 1 - Cyclistic/Raw Data/Divvy_Trips_2019_Q1/Divvy_Trips_2019_Q1.csv")
 
-# check the column names and some column samples
+# check the column names find
 head(Q12019_Cyclistic)
 ```
 ![image](https://user-images.githubusercontent.com/78386715/134204550-28fd686b-0f91-41ce-b209-b68023015108.png)
