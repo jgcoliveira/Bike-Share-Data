@@ -75,7 +75,7 @@ Q12019_Cyclistic <- read.csv("C:/Users/jguic/OneDrive/Desktop/Coding/Google Caps
 # check the column names find
 head(Q12019_Cyclistic)
 ```
-![image](https://user-images.githubusercontent.com/78386715/134204550-28fd686b-0f91-41ce-b209-b68023015108.png)
+![image](https://user-images.githubusercontent.com/78386715/134373076-b27efb17-0ed4-4795-ae48-cf2d6591878b.png)
 
 ### Data Quality
 
