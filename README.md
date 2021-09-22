@@ -6,7 +6,7 @@ This Case Study is the Capstone Project of the Google Data Analytics Professiona
 ##Summary
 
 1. Business Task
-2. Data Sources and Tools Used
+2. Data Sources
 3. Data Cleaning and Manipulation
 4. Summary of Analysis
 5. Key Findings and Supporting Visualizations
@@ -50,13 +50,11 @@ Recommendations
 
 ## 2. Data Sources
 
-● Where is your data located?
-
 ### Location
 
 We will use 12 months of Cyclistic trip data available through [this link](https://divvy-tripdata.s3.amazonaws.com/index.html). The data has been made available by Motivate International Inc. under [this license](https://www.divvybikes.com/data-license-agreement) for the purpose of this case study.
 
-The data is split into 4 folders, each one containing a csv file of quarterly trip data. Together they represent 4 quarters of 2019 trip data.
+The data is divided across 4 folders, each one containing a csv file of quarterly trip data. Together they represent the 4 quarters of 2019 trip data.
 
 For analysis purposes, the csv files will be merged onto 1 single file to facilitate the analysis
 
@@ -79,21 +77,12 @@ head(Q12019_Cyclistic)
 ```
 ![image](https://user-images.githubusercontent.com/78386715/134204550-28fd686b-0f91-41ce-b209-b68023015108.png)
 
-
-
-
 ### Data Quality
 
-Let's review the data integrity by:
-Make sure that all the data sets share the same columns, in the same order
-Looking for missing values and determining their importance
+Given its direct source, we can assume that the data is reliable, original, comprehensive and current.
 
-● Are there issues with bias or credibility in this data? Does your data ROCCC? 
+Nevertheless, we'll review the data integrity in the Data Cleaning chapter by ensuring it is accurate, complete, consistent, trustworthy and aligned with the business objective before beginning to analyse it in order to draw conclusions.
 
-● How are you addressing licensing, privacy, security, and accessibility? 
+## 3. Data Cleaning and Manipulation
 
-● How did you verify the data’s integrity? 
 
-● How does it help you answer your question? 
-
-● Are there any problems with the data?
