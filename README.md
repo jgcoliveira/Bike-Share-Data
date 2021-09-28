@@ -6,7 +6,7 @@ This Case Study is the Capstone Project of the Google Data Analytics Professiona
 ##Summary
 
 1. Business Task
-2. Data Sources
+2. Data Collection and Preparation
 3. Data Cleaning and Manipulation
 4. Summary of Analysis
 5. Key Findings and Supporting Visualizations
@@ -48,9 +48,9 @@ Data Analysis
 Visualizations and Key Findings
 Recommendations
 
-## 2. Data Sources
+## 2. Data Collection and Preparation
 
-### Location
+### Sources
 
 We will use 12 months of Cyclistic trip data available through [this link](https://divvy-tripdata.s3.amazonaws.com/index.html). The data has been made available by Motivate International Inc. under [this license](https://www.divvybikes.com/data-license-agreement) for the purpose of this case study.
 
