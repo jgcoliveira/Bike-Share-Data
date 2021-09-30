@@ -5,12 +5,12 @@ This Case Study is the Capstone Project of the Google Data Analytics Professiona
 
 ##Summary
 
-1. Business Task
-2. Data Collection and Preparation
-3. Data Cleaning and Manipulation
-4. Summary of Analysis
-5. Key Findings and Supporting Visualizations
-6. Recommendations
+* [1. Business Task](##1.-Business-Task)
+* [2. Data Collection and Preparation](##2.-Data-Collection-and-Preparation)
+* [3. Data Cleaning and Manipulation](##-3.-Data-Cleaning-and-Manipulation)
+* [4. Summary of Analysis](##4.-Summary-of-Analysis)
+* [5. Key Findings and Supporting Visualizations](##5.-Key-Findings-and-Supporting-Visualizations)
+
 
   
 ## 1. Business Task
@@ -101,7 +101,7 @@ Let's also review the average duration and number of rides during the course of 
 
 Looking at the above data, it is noticeable that casual members take longer trips than members (+ 4x). But members perform a bigger amount of trips. We'll have to create graphs in order to better understand if there are any trends in the data.
 
-## 5. Key Findings and supporting visualizations
+## 5. Key Findings and Supporting Visualizations
 
 Using the available data, we're able to plot several graphs, analyse them and draw some conclusions.
 
