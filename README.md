@@ -133,6 +133,13 @@ As the goal of this project is to better understand the how different customer t
 ![image](https://user-images.githubusercontent.com/78386715/135455443-2bb8071e-8664-441e-8bf3-968bb637ebc0.png)
 
 Let's also review the average duration and number of rides during the course of the week:
+```{r}
+Y_Cyclistic_V2 %>% 
+  drop_na() %>% 
+  group_by(weekday, member_casual) %>% 
+  summarize( avg_duration = mean(ride_length), number_of_rides = n()) %>% 
+  arrange(member_casual, weekday)
+```
 ![image](https://user-images.githubusercontent.com/78386715/135455695-5336f36d-622a-4aee-bb09-a10d1fb34298.png)
 
 Looking at the above data, it is noticeable that casual members take longer trips than members (+ 4x). But members perform a bigger amount of trips. We'll have to create graphs in order to better understand if there are any trends in the data.
