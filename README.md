@@ -64,18 +64,17 @@ Since we are dealing solely with equaly structured tabular data and there is no 
 
 ### Columns
 
-Let's look into the data
-```R
-install.packages("tidyverse")
-library(tidyverse)
+In order to combine all the dataframes into one, all must share the same columns with the same exact names (although not in the same order)
 
-# load the first data set 
-Q12019_Cyclistic <- read.csv("C:/Users/jguic/OneDrive/Desktop/Coding/Google Capstone/Case Study 1 - Cyclistic/Raw Data/Divvy_Trips_2019_Q1/Divvy_Trips_2019_Q1.csv")
+![image](https://user-images.githubusercontent.com/78386715/135453486-7b3954a0-ae8e-42e9-ae3d-02ba6a68de02.png)
 
-# check the column names find
-head(Q12019_Cyclistic)
-```
-![image](https://user-images.githubusercontent.com/78386715/134373076-b27efb17-0ed4-4795-ae48-cf2d6591878b.png)
+ At first glance, we're able to see some incongruencies:
+ - Q2_2019 and Q3_2019 share column names;
+ - Q1_2020 does not have a gender nor a birthday column;
+ - Q2_2019, Q3_2019 and Q4_2019 do not have latitude and longitude columns.
+
+Assuming it will be the chosen table format going forward, we renamed all the columns and changed their data types to make them consistent with the Q12020 data frame.
+Only then were we able to append the 4 data frames into a single one, and then after we deleted all the unused columns.
 
 ### Data Quality
 
@@ -85,4 +84,49 @@ Nevertheless, we'll review the data integrity in the Data Cleaning chapter by en
 
 ## 3. Data Cleaning and Manipulation
 
+By inspecting the data, we learn what tasks needed to be performed, and then proceeded to:
 
+- remove unwanted characters and duplicate entries
+- fix inconsistent data by making sure there were no equivelent user types with different names, i.e. "member"/"Subscriber" and  "Customer"/"casual"
+- include new calculated calendar columns (month, day, year, weekday) and trip-related columns (start hour, ride length)
+- remove maintenance trips (having start_station_name == "HQ QR"), zero and negative time trips (ride_length <= 0)
+
+## 4. Summary of Analysis
+
+As the goal of this project is to better understand the how different customer types use the Cyclistic bike service, let's start by looking at some summary statistics:
+![image](https://user-images.githubusercontent.com/78386715/135455443-2bb8071e-8664-441e-8bf3-968bb637ebc0.png)
+
+Let's also review the average duration and number of rides during the course of the week:
+![image](https://user-images.githubusercontent.com/78386715/135455695-5336f36d-622a-4aee-bb09-a10d1fb34298.png)
+
+Looking at the above data, it is noticeable that casual members take longer trips than members (+ 4x). But members perform a bigger amount of trips. We'll have to create graphs in order to better understand if there are any trends in the data.
+
+## 5. Key Findings and supporting visualizations
+
+Using the available data, we're able to plot several graphs, analyse them and draw some conclusions.
+
+### Total Number of Rides per Weekday, User Type
+![image](https://user-images.githubusercontent.com/78386715/135473312-bc8930bb-8ede-47a5-be11-8a4c8b5a9780.png)
+
+**Findings**
+  - Member trips increase at the start of the week, peaking during the middle of the week (wednesday) and then decreasing
+  - Casual trips have the reverse trend, peaking during the weekend and then decreasing during the week
+  - The amount of member trips continuously supersedes the amount of casual trips
+
+### Average Ride Duration per Weekday, User Type
+![image](https://user-images.githubusercontent.com/78386715/135474165-5cf3d75b-5ddd-4e18-83ae-f9e8107ace48.png)
+
+**Findings**
+  - On a daily basis, the average duration of casual trips tends to be approximately 4 longer than member trips.
+  - Member trips seem to always be averaging 900 sec = 15 mins 
+  - Casual trips always exceed the 3000 sec = 50 min mark, peaking on friday
+  - Members' average ride duration does not fluctuate significantly during the course of the work week, only increasing slightly during the weekend
+  - Casual riders seem to take longer trips during wednesday and friday
+
+### Total Number of Rides per Hour, User Type
+![image](https://user-images.githubusercontent.com/78386715/135475120-ca90ab8e-b4bd-4434-a615-436cb3d69015.png)
+
+**Findings**
+ - Members usually outperform casuals in terms of trip numbers, except for the early morning hours (0-5AM), during which both groups perform a similarly small number of trips
+ - Members perform a bigger number of rides during commuting hours (7-8AM and 4-5PM)
+ - The number of casual trips increases during the morning period, stabilizing from 11AM to 5PM, and then decreasing similarly to the morning rate
