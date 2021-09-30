@@ -1,6 +1,6 @@
 # Bike Share Service Users
 
-**Bike Sharing Service Data BI project using using R for data cleaning, and manipulation and visualization**
+**Bike Sharing Service Data BI project using using R (tidyverse packages) for data cleaning, and manipulation and visualization**
 
 This Case Study is the Capstone Project of the Google Data Analytics Professional Certificate, meant to demonstrate the technical and analytical skills necessary for an entry-level Data Analyst position.
 
