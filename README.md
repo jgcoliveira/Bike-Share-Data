@@ -93,6 +93,7 @@ Y_Cyclistic %>%
   distinct() %>% 
   nrow()
 ```
+
 - fix inconsistent data by making sure there were no equivelent user types with different names, i.e. "member"/"Subscriber" and  "Customer"/"casual"
 ```{r}
 Y_Cyclistic <- Y_Cyclistic %>%
@@ -102,8 +103,29 @@ Y_Cyclistic <- Y_Cyclistic %>%
                                 )
          )
 ```
+
 - include new calculated calendar columns (month, day, year, weekday) and trip-related columns (start hour, ride length)
+```{r}
+#calendar columns
+Y_Cyclistic$date <- as.Date(Y_Cyclistic$started_at)
+Y_Cyclistic$month <-format(as.Date(Y_Cyclistic$date), "%m")
+Y_Cyclistic$day <-format(as.Date(Y_Cyclistic$date), "%d")
+Y_Cyclistic$year <-format(as.Date(Y_Cyclistic$date), "%Y")
+Y_Cyclistic$weekday <-format(as.Date(Y_Cyclistic$date), "%A")
+
+#start hour column
+Y_Cyclistic$start_hour <- hour(Y_Cyclistic$started_at)
+
+#ride length 
+Y_Cyclistic$ride_length <- difftime(strptime(Y_Cyclistic$ended_at, "%Y-%m-%d %H:%M:%S"), #ended_at needs to be first converted to time data type
+                                    strptime(Y_Cyclistic$started_at, "%Y-%m-%d %H:%M:%S") #ended_at needs to be first converted to time data type
+                                    )
+```
+
 - remove maintenance trips (having start_station_name == "HQ QR"), zero and negative time trips (ride_length <= 0)
+```{r}
+Y_Cyclistic_V2 <- Y_Cyclistic[!(Y_Cyclistic$start_station_name == "HQ QR" | Y_Cyclistic$ride_length <= 0),]
+```
 
 ## 4. Summary of Analysis
 
