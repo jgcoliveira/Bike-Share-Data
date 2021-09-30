@@ -1,5 +1,6 @@
 # Bike-Share-Data
-Analysing previous bike sharing data in order to increase revenue
+
+**Bike Sharing Service Data BI project using using R for data cleaning, and manipulation and visualization**
 
 This Case Study is the Capstone Project of the Google Data Analytics Professional Certificate, meant to demonstrate the technical and analytical skills necessary for an entry-level Data Analyst position.
 
@@ -85,7 +86,22 @@ Nevertheless, we'll review the data integrity in the Data Cleaning chapter by en
 By inspecting the data, we learn what tasks needed to be performed, and then proceeded to:
 
 - remove unwanted characters and duplicate entries
+```{r}
+clean_names(Y_Cyclistic)
+
+Y_Cyclistic %>% 
+  distinct() %>% 
+  nrow()
+```
 - fix inconsistent data by making sure there were no equivelent user types with different names, i.e. "member"/"Subscriber" and  "Customer"/"casual"
+```{r}
+Y_Cyclistic <- Y_Cyclistic %>%
+  mutate(member_casual = recode(member_casual,
+                                "Subscriber" = "member",
+                                "Customer" = "casual"
+                                )
+         )
+```
 - include new calculated calendar columns (month, day, year, weekday) and trip-related columns (start hour, ride length)
 - remove maintenance trips (having start_station_name == "HQ QR"), zero and negative time trips (ride_length <= 0)
 
