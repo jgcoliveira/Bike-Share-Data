@@ -1,4 +1,4 @@
-# Bike-Share-Data
+# Bike Share Service Users
 
 **Bike Sharing Service Data BI project using using R for data cleaning, and manipulation and visualization**
 
