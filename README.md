@@ -6,18 +6,11 @@ This Case Study is the Capstone Project of the Google Data Analytics Professiona
 ##Summary
 
 [1. Business Task](##1.-business-task)
-
-[2. Data Collection and Preparation](##-2.-data-collection-and-preparation)
-
-[3. Data Cleaning and Manipulation](##-3.-data-cleaning-and-manipulation)
-
+[2. Data Collection and Preparation](##2.-data-collection-and-preparation)
+[3. Data Cleaning and Manipulation](##3.-data-cleaning-and-manipulation)
 [4. Summary of Analysis](##4.-summary-of-analysis)
-
 [5. Key Findings and Supporting Visualizations](##5.-key-Findings-and-supporting-visualizations)
-
-
-
-  
+ 
 ## 1. Business Task
 
 ### Purpose
