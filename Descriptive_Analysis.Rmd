@@ -1,0 +1,111 @@
+---
+title: "Descriptive Analysis"
+output: html_notebook
+---
+
+# 1. Data Overview
+
+
+```{r}
+skim_without_charts(Y_Cyclistic_V2)
+```
+
+#2. Member/Casual Comparison
+
+As the goal of this project is to better understand the how different customer types use the Cyclistic bike service, let's start by looking at some summary statistics.
+
+## 2.1 Summary statistics
+
+```{r}
+Y_Cyclistic_V2 %>%
+  drop_na() %>% 
+  group_by(member_casual) %>% 
+  summarize( ride_mean = mean(ride_length),
+             ride_median = median(ride_length),
+             ride_max = max(ride_length),
+             ride_min = min(ride_length))
+```
+
+## 2.2 Compare members and casual users - Weekdays
+
+```{r}
+Y_Cyclistic_V2 %>% 
+  drop_na() %>% 
+  group_by(weekday, member_casual) %>% 
+  summarize( ride_mean = mean(ride_length)) %>% 
+  arrange(member_casual, weekday)
+```
+
+
+The days of the week are out of order. We can fix that with the ordered function
+```{r}
+Y_Cyclistic_V2$weekday <- ordered(Y_Cyclistic_V2$weekday, #vector of data taking a small number of distinct values
+                                  levels=c("Sunday", 
+                                           "Monday", 
+                                           "Tuesday", 
+                                           "Wednesday",
+                                           "Thursday", 
+                                           "Friday", 
+                                           "Saturday")) # must be a unique set of values sorted into increansing order
+```
+
+```{r}
+Y_Cyclistic_V2 %>% 
+  drop_na() %>% 
+  group_by(weekday, member_casual) %>% 
+  summarize( avg_duration = mean(ride_length), number_of_rides = n()) %>% 
+  arrange(member_casual, weekday)
+```
+Looking at the above data, it is noticeable that casual members take longer trips than members (+ 4x). But members perform a bigger amount of trips.
+
+We'll create a graph in order to better visualize the total number of rides per rider type
+```{r}
+Y_Cyclistic_V2 %>%
+  drop_na %>% 
+  group_by(weekday, member_casual) %>% 
+  summarize(number_of_rides = n()) %>% 
+  arrange(member_casual, weekday) %>% 
+  ggplot(aes(x = weekday, y = number_of_rides, fill = member_casual)) + geom_col(position = "dodge")
+```
+We're able to learn that:
+  - member trips increase at the start of the week, peaking during the middle of the week (wednesday) and then decreasing
+  - casual trips have the reverse trend, peaking during the weekend and then decreasing during the week
+  - the amount of member trips continuously supersedes the amount of casual trips
+
+visualize the average ride duration
+```{r}
+Y_Cyclistic_V2 %>%
+  drop_na %>% 
+  group_by(member_casual, weekday) %>% 
+  summarize(avg_duration = mean(ride_length)) %>%
+  arrange(member_casual, weekday) %>% 
+  ggplot(aes(x = weekday, y = avg_duration, fill = member_casual)) + geom_col(position = "dodge")
+```
+
+By looking at the graph, we're able to understand that:
+  - on a daily basis, the average duration of casual trips tends to be approximately 4 longer than member trips.
+  - member trips seem to always be averaging 900 sec = 15 mins 
+  - casual trips always exceed the 3000 sec = 50 min mark, peaking on Friday
+
+## 2.2 Compare members and casual users - Hourly
+```{r}
+Y_Cyclistic_V2 %>% 
+  group_by(start_hour, member_casual) %>% 
+  summarize( avg_duration = mean(ride_length), number_of_rides = n()) %>% 
+  arrange(member_casual, start_hour)
+```
+We're able to tell that the number of trips increases during normal commuting hours, but we need to create a graph to better visualize the data
+
+total number of rides per rider type
+```{r}
+Y_Cyclistic_V2 %>%
+  drop_na %>% 
+  group_by(start_hour, member_casual) %>% 
+  summarize(number_of_rides = n()) %>% 
+  arrange(member_casual, start_hour) %>%
+  ggplot(aes(x = start_hour, y = number_of_rides, fill = member_casual)) + geom_col(position = "dodge")
+```
+We're able to see that:
+  - members usually outperform casuals in terms of trip numbers, except for the early morning hours (0-5AM), during which both groups perform a similarly small number of    trips
+  - members perform a bigger number of rides during commuting hours (7-8AM and 4-5PM)
+  - the number of casual trips increases during the morning period, stabilizing from 11AM to 5PM, and then decreasing similarly to the morning rate.

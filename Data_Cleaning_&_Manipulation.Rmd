@@ -1,0 +1,136 @@
+---
+title: "Data Cleaning and Manipulation"
+output: html_notebook
+---
+
+
+
+# 1. Data Inspection and Planning
+
+Let's inspect the data
+```{r}
+summary(Y_Cyclistic)
+```
+
+```{r}
+head(Y_Cyclistic)
+```
+
+The main problems that need to be fixed are:
+
+- remove unwanted characters and duplicate entries
+- fix inconsistent data
+- include new calculated time columns
+- remove maintenance trips, zero and negative time trips
+
+# 2. Data Cleaning
+
+## 2.1 Remove unwanted characters and duplicate entries
+
+The clean_names function will remove any unwanted characters and consolidate data to facilitate aggregation
+```{r}
+clean_names(Y_Cyclistic)
+```
+
+Let's look for duplicate entries
+
+```{r}
+Y_Cyclistic %>% 
+  distinct() %>% 
+  nrow()
+```
+Since the number of distinct values is equal to the total number of observations in the data frame, we conclude that all rows are unique
+
+## 2.2 Creating column consistency
+
+Knowing that the member_casual column has different names for members ("member" and "Subscriber") and casual riders ("Customer" and "casual"), we need to consolidate them from 4 to 2 labels
+```{r}
+table(Y_Cyclistic$member_casual)
+```
+
+Replace the Column values using the recode() function
+```{r}
+Y_Cyclistic <- Y_Cyclistic %>%
+  mutate(member_casual = recode(member_casual,
+                                "Subscriber" = "member",
+                                "Customer" = "casual"
+                                )
+         )
+```
+
+Confirm that all values have been corrected
+```{r}
+table(Y_Cyclistic$member_casual)
+```
+
+## 2.3 Create new columns
+
+We can create day, weekday, month and Year columns to aggregate data in different levels of granularity and thus facilitating the discovery of new trends
+
+```{r}
+
+Y_Cyclistic$date <- as.Date(Y_Cyclistic$started_at) # we can directly create a new date column
+Y_Cyclistic$month <-format(as.Date(Y_Cyclistic$date), "%m")
+Y_Cyclistic$day <-format(as.Date(Y_Cyclistic$date), "%d")
+Y_Cyclistic$year <-format(as.Date(Y_Cyclistic$date), "%Y")
+Y_Cyclistic$weekday <-format(as.Date(Y_Cyclistic$date), "%A")
+
+skim_without_charts(Y_Cyclistic)
+```
+
+We can also go further with out possibilities and create start_hour and ride_length column
+```{r}
+Y_Cyclistic$start_hour <- hour(Y_Cyclistic$started_at)
+
+Y_Cyclistic$ride_length <- difftime(strptime(Y_Cyclistic$ended_at, "%Y-%m-%d %H:%M:%S"), #ended_at needs to be first converted to time data type
+                                    strptime(Y_Cyclistic$started_at, "%Y-%m-%d %H:%M:%S") #ended_at needs to be first converted to time data type
+                                    )
+```
+
+Since the ride_length column is formatted to "x seconds", we want to give it a cleaner look and format it to "%h:%M:$s"
+```{r}
+#Load and use the hms package
+library(hms)
+
+Y_Cyclistic$ride_length <- as_hms(Y_Cyclistic$ride_length)
+```
+
+## 2.4 Remove maintenance and negative time trips
+
+The dataframe includes a few entries when bikes were taken out of docks and checked for quality by Cyclistic or ride_length was negative
+```{r}
+Y_Cyclistic %>% 
+  filter(ended_at == started_at)
+```
+
+It is noticible that the start_station_name values appear to all be HQ QR. We're able to confirm it
+```{r}
+Y_Cyclistic %>%
+  filter(ended_at == started_at) %>% 
+  count(start_station_name) #groups by start_station_name and counts the number of observations 
+```
+
+Now let's cross the information and see if all HQ QR trips have zero ride_length
+```{r}
+Y_Cyclistic %>%
+  filter(start_station_name == "HQ QR") %>% 
+  count(ride_length) 
+```
+As some HQ QR trips have positive ride lengths, we're only able to use the ended_at == started_at filter condition
+
+```{r}
+Y_Cyclistic %>% 
+  filter(ride_length < 0)
+```
+
+So we now have to remove observations where:
+  - "HQ QR" start_station_names has they are maintenance trips
+  - ride_length is equal or less than zero
+  
+Since data is being removed, the best practice is to create and work with a new dataframe
+```{r}
+Y_Cyclistic_V2 <- Y_Cyclistic[!(Y_Cyclistic$start_station_name == "HQ QR" | Y_Cyclistic$ride_length <= 0),]
+
+nrow(Y_Cyclistic) - nrow(Y_Cyclistic_V2)
+```
+As we can see, 3780 observations have been deleted
